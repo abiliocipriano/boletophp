@@ -104,10 +104,22 @@ $calculoDv = '';
 		$calculoDv = $calculoDv + (substr($sequencia,$num,1) * $constante);
 	}
 $Resto = $calculoDv % 11;
-$Dv = 11 - $Resto;
-if ($Dv == 0) $Dv = 0;
-if ($Dv == 1) $Dv = 0;
-if ($Dv > 9) $Dv = 0;
+//$Dv = 11 - $Resto;
+//if ($Dv == 0) $Dv = 0;
+//if ($Dv == 1) $Dv = 0;
+//if ($Dv > 9) $Dv = 0;
+
+// De acordo com a documentação "Se o resto for igual a 0 ou 1 então o DV é igual a 0"
+// Como estava, como exemplo se o CalculoDv fosse 285 mod 11 = 10 , então DV = 0, 
+// mas de acordo com a documentação o Resto sendo 10  não deveria ter esse cálculo, ficando assim 11 - 10  então o DV = 1.
+// Agora se o Resto desse 0 ou 1 e não o DV, então o DV seria 0 diretamente.
+if ($Resto == 0){
+	$Dv = 0;
+}elseif($Resto == 1){
+	$Dv = 0;
+}else{
+	$Dv = 11 - $Resto;
+}
 $dadosboleto["nosso_numero"] = $NossoNumero . $Dv;
 
 /*************************************************************************
